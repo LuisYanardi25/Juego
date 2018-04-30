@@ -12,8 +12,9 @@ public class juego {
     public static void main(String[] args) {
         
        JOptionPane.showMessageDialog(null,"Bienvenido a adivinar numero");
-        
-       int randomNum = GenerarNumeroAleatorio();
+        int numero_sup=10;
+        int numero_inf=0;
+       int randomNum = GenerarNumeroAleatorio(numero_sup,numero_inf);
         
        int intento=0;
       
@@ -56,40 +57,38 @@ public class juego {
           
       }                
        }else{
-           int numeroAleatorio =(int)(( Math.random()* 10 ) + 1 );
-           
-           char s = JOptionPane.showInputDialog(null,"Intento, el numero es?: " + numeroAleatorio).charAt(0);
-            
-           int numero_sup = 10;
-            int numero_inf = 0;
-          
+//           int numeroAleatorio =GenerarNumeroAleatorio(numero_sup,numero_inf);
+        
+//           char s = JOptionPane.showInputDialog(null,"Intento, el numero es?: " + numeroAleatorio).charAt(0);
+             
+          int numeroAleatorio;
+          char s;
             do{
+                numeroAleatorio =GenerarNumeroAleatorio(numero_sup,numero_inf);
+
+                s = JOptionPane.showInputDialog(null,"Es este?: " +  numeroAleatorio).charAt(0);
               
-                    if(numeroAleatorio>0 ||  numeroAleatorio<10){                     
+                    if(numeroAleatorio>=0 ||  numeroAleatorio<=10){                     
                     
                          if(s =='+'){
-                                numero_sup= numeroAleatorio;
+                                numero_inf= numeroAleatorio;
                                
-                                 numeroAleatorio +=((numero_sup-numero_inf)/2);
+//                                numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf);
                                 JOptionPane.showMessageDialog(null,"Mas cierto");
+                              
                                 
-                                s = JOptionPane.showInputDialog(null,"Es este?: " +  numeroAleatorio).charAt(0);
-                           }else{
-                            
-                             if(s=='-'){
-                                 numero_inf= numeroAleatorio;
+                           }else if(s=='-'){
+                                // numero_inf= numeroAleatorio;
+                                numero_sup=numeroAleatorio;
                                 
-                                 numeroAleatorio -=((numero_sup-numero_inf)/2);
+//                                 numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf);
                                 
                                  JOptionPane.showMessageDialog(null,"Menos cierto");
                                 
-                                 s = JOptionPane.showInputDialog(null,"Es este?: " +  numeroAleatorio).charAt(0);
  
-                              }else
-                                if(s=='='){
+                              }else if(s=='='){
                                       JOptionPane.showMessageDialog(null,"ADIVINE!! YEAAH era este: " +  numeroAleatorio);
                                 }
-                           }
                    }else{
                        JOptionPane.showMessageDialog(null,"Intento de nuevo");
                         }
@@ -102,7 +101,7 @@ public class juego {
      } 
     
     
-    private static int GenerarNumeroAleatorio(){
-        return  ((int)(Math.random()* 10 ) + 1 );
+    private static int GenerarNumeroAleatorio(int numero_sup, int numero_inf){
+        return  ((int)(Math.random()* numero_sup-numero_inf ) + numero_inf );
     }
 }
