@@ -1,107 +1,92 @@
-
-import java.util.InputMismatchException;
-import javax.swing.*;
 import javax.swing.JOptionPane;
 
 /**
  * 
- * @LuisYanardiSiccatto Sammy Guergachi <lsiccatto@gmail.com>
+ * @LuisYanardiSiccatto Luis Yanardi Siccatto <lsiccatto@gmail.com>
  */
 public class juego {
     
     public static void main(String[] args) {
         
        JOptionPane.showMessageDialog(null,"Bienvenido a adivinar numero");
-        int numero_sup=10;
-        int numero_inf=0;
-       int randomNum = GenerarNumeroAleatorio(numero_sup,numero_inf);
+        int numero_sup=100;
+        int numero_inf=1;
+   
+        int randomNum = GenerarNumeroAleatorio(numero_sup,numero_inf);
         
        int intento=0;
       
-       String[] options = {"Yo", "Vos"};
+       String[] options = {"Yo", "Vos","Terminar Juego"};
        
-       int opcion = JOptionPane.showOptionDialog(null, "Quien quiere que adivine el número", "Adivinar Número", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,null, options, options[0]);
+       int opcion = JOptionPane.showOptionDialog(null, "Quien quiere que adivine el número", "Adivinar Número", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
 //       int opcion=JOptionPane.showConfirmDialog(null,"Listo para comenzar?","Listo?",JOptionPane.YES_NO_OPTION);
-        
-    
-         
-   
-       if(opcion==0){
-  JOptionPane.showMessageDialog(null,"El numero que intenta adivinar es....");  
-      try{  
-          do{ 
-              intento = Integer.parseInt(JOptionPane.showInputDialog(null,"Escribe un numero: "));
-            do{  
-              if(intento<0 || intento>5){
-               JOptionPane.showMessageDialog(null,"Ingreso un numero fuera del Rango");
-               intento = Integer.parseInt(JOptionPane.showInputDialog(null,"Intentelo de nuevo entre 0 y 5: "));
-             }
-            }while(intento>5);    
-           if(intento>=0 && intento<=5){    
-              
-                if(intento==randomNum){
-                 JOptionPane.showMessageDialog(null,"Adivinaste! :) es: " + randomNum );
-             }else{
-                 if(intento<randomNum){
-                    JOptionPane.showMessageDialog(null,"Mas!");
-                 }else{
-                     if(intento>randomNum){
-                         JOptionPane.showMessageDialog(null,"Menos!");
-                     }
-                 }
-             }          
-           } 
-          }while(intento!=randomNum);
-      }catch(NumberFormatException ex){
-          JOptionPane.showMessageDialog(null,"Ingreso un caracter NO NUMERICO");
-          
-      }                
-       }else{
-//           int numeroAleatorio =GenerarNumeroAleatorio(numero_sup,numero_inf);
-        
-//           char s = JOptionPane.showInputDialog(null,"Intento, el numero es?: " + numeroAleatorio).charAt(0);
-             
-          int numeroAleatorio;
-          char s;
-            do{
-                numeroAleatorio =GenerarNumeroAleatorio(numero_sup,numero_inf);
-
-                s = JOptionPane.showInputDialog(null,"Es este?: " +  numeroAleatorio).charAt(0);
-              
-                    if(numeroAleatorio>=0 ||  numeroAleatorio<=10){                     
-                    
-                         if(s =='+'){
-                                numero_inf= numeroAleatorio;
-                               
-//                                numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf);
-                                JOptionPane.showMessageDialog(null,"Mas cierto");
-                              
-                                
-                           }else if(s=='-'){
-                                // numero_inf= numeroAleatorio;
-                                numero_sup=numeroAleatorio;
-                                
-//                                 numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf);
-                                
-                                 JOptionPane.showMessageDialog(null,"Menos cierto");
-                                
- 
-                              }else if(s=='='){
-                                      JOptionPane.showMessageDialog(null,"ADIVINE!! YEAAH era este: " +  numeroAleatorio);
+        switch (opcion) {
+            case 0:
+                JOptionPane.showMessageDialog(null,"Adivine un numero entre 1-100");
+                try{
+                    do{
+                        intento = Integer.parseInt(JOptionPane.showInputDialog(null,"Escribe un numero: "));
+                        do{
+                            if(intento<1 || intento>100){
+                                JOptionPane.showMessageDialog(null,"Ingreso un numero fuera del Rango");
+                                intento = Integer.parseInt(JOptionPane.showInputDialog(null,"Intentelo de nuevo entre 1 y 100  : "));
+                            }
+                        }while(intento>100 ||  intento<1);
+                        
+                        if(intento>=1 && intento<=100){
+                            if(intento==randomNum){
+                                JOptionPane.showMessageDialog(null,"Adivinaste! :) era: " + randomNum );
+                            }else{
+                                if(intento<randomNum){
+                                    JOptionPane.showMessageDialog(null,"Mas!");
+                                }else{
+                                    if(intento>randomNum){
+                                        JOptionPane.showMessageDialog(null,"Menos!");
+                                    }
                                 }
-                   }else{
-                       JOptionPane.showMessageDialog(null,"Intento de nuevo");
-                        }
-        
-        }while(s != '=');
-           }
-     
-     
-    
+                            }
+                        }     
+                    }while(intento != randomNum);
+                }catch(NumberFormatException ex){
+                    JOptionPane.showMessageDialog(null,"Ingreso un caracter NO NUMERICO");
+                    JOptionPane.showMessageDialog(null,"Abra de nuevo el juego");
+                }         break;
+            case 1:     
+                int numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf); ;
+                char s;
+                do{
+                    s = JOptionPane.showInputDialog(null,"Es este?: " +  numeroAleatorio).charAt(0);
+                        switch (s) {
+                            case '+':
+                                numero_inf=numeroAleatorio;
+                                numeroAleatorio+=((numero_sup-numero_inf))/2;
+                                //                                numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf);
+                                JOptionPane.showMessageDialog(null,"Es mayor");
+                                break;
+                            case '-':
+                                // numero_inf= numeroAleatorio;
+                              numero_sup=numeroAleatorio;
+                             numeroAleatorio-=((numero_sup-numero_inf))/2;
+                                //                                 numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf);
+                                
+                                JOptionPane.showMessageDialog(null,"Es menor");
+                                break;
+                            case '=':
+                                JOptionPane.showMessageDialog(null,"ADIVINE!! YEAAH era este: " +  numeroAleatorio);
+                                break;
+                            default:
+                                break;
+                        }           
+                }while(s != '=');
+                break;
+            default:
+                System.exit(1);
+        }
      } 
     
     
     private static int GenerarNumeroAleatorio(int numero_sup, int numero_inf){
-        return  ((int)(Math.random()* numero_sup-numero_inf ) + numero_inf );
+        
+        return  ((int)(Math.random()* numero_sup) + numero_inf );
     }
 }
