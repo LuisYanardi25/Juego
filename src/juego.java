@@ -18,13 +18,14 @@ public class juego {
       
        String[] options = {"Yo", "Vos","Terminar Juego"};
        
-       int opcion = JOptionPane.showOptionDialog(null, "Quien quiere que adivine el número", "Adivinar Número", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
-//       int opcion=JOptionPane.showConfirmDialog(null,"Listo para comenzar?","Listo?",JOptionPane.YES_NO_OPTION);
-        switch (opcion) {
-            case 0:
+       int opcion;
+do {
+    opcion = JOptionPane.showOptionDialog(null, "Quien quiere que adivine el número", "Adivinar Número", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
+     
+    if(opcion==0){
                 JOptionPane.showMessageDialog(null,"Adivine un numero entre 1-100");
+              do{
                 try{
-                    do{
                         intento = Integer.parseInt(JOptionPane.showInputDialog(null,"Escribe un numero: "));
                         do{
                             if(intento<1 || intento>100){
@@ -46,12 +47,15 @@ public class juego {
                                 }
                             }
                         }     
-                    }while(intento != randomNum);
+                    
                 }catch(NumberFormatException ex){
-                    JOptionPane.showMessageDialog(null,"Ingreso un caracter NO NUMERICO");
-                    JOptionPane.showMessageDialog(null,"Abra de nuevo el juego");
-                }         break;
-            case 1:     
+                    JOptionPane.showMessageDialog(null,"Ingreso un caracter NO NUMERICO");      
+                }         
+              }while(intento!=randomNum); 
+              
+             
+                        
+      }else if(opcion==1){      
                 int numeroAleatorio = GenerarNumeroAleatorio(numero_sup,numero_inf); ;
                 char s;
                 do{
@@ -78,11 +82,12 @@ public class juego {
                                 break;
                         }           
                 }while(s != '=');
-                break;
-            default:
+               
+      }else{
                 System.exit(1);
         }
-     } 
+     }while(opcion != 2); 
+}
     
     
     private static int GenerarNumeroAleatorio(int numero_sup, int numero_inf){
